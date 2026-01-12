@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer | Prescripty</title>
+    <link rel="stylesheet" href="src/css/Styles.css">
+    <link rel="stylesheet" href="src/css/nav-layout.css">
+    <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+    
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+                <h2>Developer Information</h2>       
+              <div class="main-content">
+                <!-- Work Section -->
+                <div class="work-section">
+                  <h2>Our Work</h2>
+                  <p>Here are some of our recent projects:</p>
+                  <ul>
+                    <li><a href="#">Prescripty Inventory Management</a></li>
+                    <p style="text-align: left;">A light weight application to manage your product, stock and so on. (For Small Business)</p>
+                    <li><a href="https://simple-tax-calculator.netlify.app"> Simple Tax Calculator for Govt. Employee</a></li>
+                    <p style="text-align: left;"> A smooth simple tax calculator. Easy to use. (Only for Govt. Employees)</p>
+                  </ul>
+                </div>
+              </div>
+              
+                <!-- Contact Section -->
+                <div class="contact-section">
+                  <h2>Contact us</h2>
+                  <p>If you have any inquiries, and need to make custom web application like this, feel free to reach out to us:</p>
+                  <ul>
+                    <li><a href="mailto:prescripty@gmail.com" target="_blank">Email: prescripty@gmail.com </a></li>
+                    <li><a href="#" target="_blank">Whatsapp</a></li>
+                    <li>Social Media:<a href="https://www.linkedin.com/company/prescripty" target="_blank">LinkedIn</a></li>
+                    <li><a href="https://prescripty.netlify.app" target="_blank">Website</a></li>
+                  </ul>
+                </div>
+              </div>
+        </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        // Initialize layout and highlight the 'Add Company' link
+        window.onload = function() {
+            initializeLayout('developer-standalone'); 
+        };
+    </script>
+</body>
+</html>

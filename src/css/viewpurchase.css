@@ -1,0 +1,243 @@
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        #main-content {
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header Card Style */
+        .header-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-top: 4px solid #3b82f6; /* Orange border for Purchases */
+        }
+
+        .header-card h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .header-card p {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Filter Styles */
+        .filter-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 15px 20px;
+            border-top: 4px solid #3b82f6; /* Blue border for control */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .date-input {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            flex-grow: 1;
+            max-width: 250px;
+        }
+
+        .clear-btn {
+            background-color: #f4f4f9;
+            color: #666;
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .clear-btn:hover {
+            background-color: #ddd;
+        }
+
+        /* Loading Indicator Style */
+        .loading-indicator {
+            text-align: center;
+            padding: 50px;
+            color: #3b82f6;
+            font-size: 18px;
+        }
+        .loading-indicator i {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        /* Table Styles with Fixed Header */
+        .responsive-table-wrapper {
+            overflow-x: auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 0 10px 10px; /* Adjust padding for inner scroll */
+            
+            /* Enable vertical scrolling for the table body */
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; 
+        }
+
+        .data-table thead {
+            /* Fix the header position at the top of the scrollable container */
+            position: sticky; 
+            top: 0; 
+            z-index: 10;
+            background-color: #ffffff; /* White background for header */
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table thead th {
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .data-table tbody td {
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #fffbeb; /* Light orange hover */
+        }
+        
+        /* General utility classes */
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .text-center { text-align: center; }
+        .text-green { color: #10b981; }
+        .text-blue { color: #3b82f6; }
+
+
+        /* Mobile Card View Styles */
+        .mobile-card-view {
+            display: block; 
+            margin-top: 20px;
+        }
+
+        .data-card-mobile {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .card-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 14px;
+        }
+        
+        .card-row-header {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+        }
+
+        .label {
+            color: #666;
+            font-weight: 500;
+        }
+        .value {
+            color: #333;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+                /* --- NEW SEARCH BAR STYLES --- */
+        .search-bar-container {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-icon-wrapper {
+            color: #3b82f6;
+            margin-right: 10px;
+        }
+
+        #product-search {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+        }
+
+        #product-search::placeholder {
+            color: #999;
+        }
+        /* --- END NEW SEARCH BAR STYLES --- */
+
+        /* Media Query for Desktop (hiding mobile view and showing table) */
+        @media (min-width: 768px) {
+            .mobile-card-view {
+                display: none; /* Hide cards on desktop */
+            }
+            .responsive-table-wrapper {
+                display: block; /* Show table on desktop */
+            }
+        }
+
+        /* Media Query for Mobile (hiding table and showing mobile view) */
+        @media (max-width: 767px) {
+             .responsive-table-wrapper {
+                display: none; /* Hide table on mobile */
+            }
+        }

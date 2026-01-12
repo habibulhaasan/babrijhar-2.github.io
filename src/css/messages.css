@@ -1,0 +1,89 @@
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #0000001a;
+    transition: margin-left 0.3s ease; /* Add transition for smooth animation */
+    margin-left: 250px; /* Initially no margin */
+    margin-top: 7%;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  p {
+    text-align: center;
+  }
+  
+  #message-container {
+    margin-top: 20px;
+    font-family:'kalpurush', sans-serif;;
+  }
+  
+  .message-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .message-list li {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .message-list li:last-child {
+    margin-bottom: 0;
+  }
+  
+  .message-list li:hover {
+    background-color: #e9e9e9;
+  }
+
+  /* Style for the "Read More" link */
+  .message-list-item a {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 5px 10px;
+    color: #fff;
+    background-color: #007BFF;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+  }
+
+  .message-list-item a:hover {
+    background-color: #0056b3;
+  }
+  
+  @media only screen and (max-width: 768px) {
+    body {
+      padding: 10px; /* Adjust padding */
+    }
+  
+    .container {
+      max-width: 100%; /* Adjust max width */
+      margin: 20px auto; /* Adjust margin */
+      margin-left: 0; /* Remove left margin */
+    }
+  
+    h2,
+    p {
+      text-align: center; /* Center align text */
+    }
+  
+    #message-container {
+      margin-top: 10px; /* Adjust margin */
+    }
+  }
+  

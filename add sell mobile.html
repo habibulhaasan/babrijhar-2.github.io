@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sell Mobile | Prescripty</title>
+    <link rel="stylesheet" href="src/css/TableAdd.css">
+    <link rel="stylesheet" href="src/css/nav-layout.css">
+    <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+    
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card" style="padding: 0.5rem;">
+                <h2>Add Sell <span  style="color: tomato;">to Patient</span></h2>
+                <div class="date-picker-container">
+                    <label for="sell_date">Select Date:</label>
+                    <input type="date" id="sell_date" name="sell_date" required>
+                </div>
+
+                <form id="SellForm" action="https://script.google.com/macros/s/AKfycbzYJsqVulljJqB3fAM_IPJamisHAcXXLB7CUiQssAU0envGCNL8Zl_laIktgTpG01IXjA/exec?function=postSellDataMobilewithDate" method="post">
+                    <table id="Sell">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th id="prodname">Product Name</th>
+                                <th>Product ID</th>
+                                <th>Current Stock</th>
+                                <th>Quantity</th>
+                                <th>Unit Price ($)</th>
+                                <th>Total Price ($)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="row1">
+                                <td>1</td>
+                                <td>
+                                    <input type="text" name="product_name[]" id="productInput1" oninput="showProductSuggestions(this)" autocomplete="off" required>
+                                    <div id="productSuggestions1" class="suggestions-box"></div> <!-- Suggestions box -->
+                                </td>                      
+                                <td><input type="text" name="product_id[]" required readonly></td>
+                                <td><input type="text" name="current_stock[]" readonly></td>
+                                <td><input type="number" name="sell_quantity[]" required onchange="calculateTotal(this)"></td>
+                                <td><input type="number" name="sell_price[]" readonly value="0" onchange="calculateTotal(this)"></td>
+                                <td><input type="text" name="total_price[]" readonly></td>
+                                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn" onclick="addRow()">Add Row</button>
+                    <button type="button" class="btn" onclick="addTwentyRows()">Add 20 Rows</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+        </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/AddSellmobile.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        // Initialize layout and highlight the 'Add Company' link
+        window.onload = function() {
+            initializeLayout('add-sell-mob-standalone'); 
+        };
+    </script>
+</body>
+</html>

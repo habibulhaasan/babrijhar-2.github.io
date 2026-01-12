@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Prescripty</title>
+    <link rel="stylesheet" href="src/css/Settings.css">
+    <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="src/css/nav-layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+    
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+                <h2>Settings</h2>
+                <p>Want to update your information?</p>
+                <form id="userForm" action="https://script.google.com/macros/s/AKfycbzc7xWF-Yq7dtW5CnQ_5-95dleOzHxhEC9HofTdt7Wm1ReN9xWOr8wJmB8Yo4tNjbfPaQ/exec?function=settingsForm" method="post">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" placeholder="New Username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="designation">Designation:</label>
+                        <input type="text" id="designation" name="designation" placeholder="New Designation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Orgazination:</label>
+                        <input type="text" id="company" name="company" placeholder="New Orgazination" required>
+                    </div>
+                    <button type="submit" class="btn">Update</button>
+                </form>
+              </div>
+        </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/Settings.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        // Initialize layout and highlight the 'Add Company' link
+        window.onload = function() {
+            initializeLayout('settings-standalone'); 
+        };
+    </script>
+</body>
+</html>

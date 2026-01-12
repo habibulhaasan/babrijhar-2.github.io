@@ -1,0 +1,203 @@
+        /* General Styles - Reusing the previous basic CSS structure */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        #main-content {
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header Card Style */
+        .header-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-top: 4px solid #3b82f6; /* Blue border */
+        }
+
+        .header-card h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .header-card p {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Loading Indicator Style */
+        .loading-indicator {
+            text-align: center;
+            padding: 50px;
+            color: #3b82f6;
+            font-size: 18px;
+        }
+        .loading-indicator i {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        /* Table (Desktop View) Styles */
+        .responsive-table-wrapper {
+            overflow-x: auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 10px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Helps with column consistency */
+        }
+
+        .data-table thead th {
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .data-table tbody td {
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        /* Detail Button Style */
+        .detail-button {
+            display: inline-block;
+            padding: 6px 10px;
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .detail-button:hover {
+            background-color: #2563eb;
+        }
+
+
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+
+
+        /* Mobile Card View Styles */
+        .mobile-card-view {
+            display: block; 
+            margin-top: 20px;
+        }
+
+        .data-card-mobile {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .card-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 14px;
+        }
+        
+        .card-row-header {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+        }
+        .card-row-footer {
+            border-top: 1px solid #eee;
+            margin-top: 8px;
+            padding-top: 8px;
+        }
+
+        .label {
+            color: #666;
+            font-weight: 500;
+        }
+        .value {
+            color: #333;
+            font-weight: 500;
+            word-break: break-all; /* Allows long links/notes to wrap */
+        }
+        .text-center { text-align: center; }
+
+                /* --- NEW SEARCH BAR STYLES --- */
+        .search-bar-container {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-icon-wrapper {
+            color: #3b82f6;
+            margin-right: 10px;
+        }
+
+        #product-search {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+        }
+
+        #product-search::placeholder {
+            color: #999;
+        }
+        /* --- END NEW SEARCH BAR STYLES --- */
+
+        /* Media Query for Desktop (hiding mobile view and showing table) */
+        @media (min-width: 768px) {
+            .mobile-card-view {
+                display: none; /* Hide cards on desktop */
+            }
+            .responsive-table-wrapper {
+                display: block; /* Show table on desktop */
+            }
+        }
+
+        /* Media Query for Mobile (hiding table and showing mobile view) */
+        @media (max-width: 767px) {
+             .responsive-table-wrapper {
+                display: none; /* Hide table on mobile */
+            }
+        }

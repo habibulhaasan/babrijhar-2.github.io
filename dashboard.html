@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer | Prescripty</title>
+    <link rel="stylesheet" href="src/css/Dashboard.css">
+    <link rel="stylesheet" href="src/css/nav-layout.css">
+    <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+    
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+
+                    <div class="dashboard-container">
+                        <h1 class="header">📊 Inventory Management Dashboard</h1>
+
+                        <!-- KPI Cards -->
+                        <div class="kpi-row">
+                            <div class="card kpi-card">
+                                <div class="card-title">
+                                    <span class="kpi-icon">📦</span>
+                                    <span>Total Remaining Stock</span>
+                                </div>
+                                <div class="stat-value" id="totalRemainingQty">...Loading...</div>
+                                <div class="stat-label">Pieces in Inventory</div>
+                            </div>
+
+                            <div class="card kpi-card">
+                                <div class="card-title">
+                                    <span class="kpi-icon">🛒</span>
+                                    <span>Today's Sell Quantity</span>
+                                </div>
+                                <div class="stat-value" id="todaySellQty">...Loading...</div>
+                                <div class="stat-label">Pieces Sold Today</div>
+                            </div>
+
+                            <div class="card kpi-card">
+                                <div class="card-title">
+                                    <span class="kpi-icon">💰</span>
+                                    <span>Today's Revenue</span>
+                                </div>
+                                <div class="stat-value" id="todaySellTotal">...Loading...</div>
+                                <div class="stat-label">Total Sales Amount</div>
+                            </div>
+
+                            <div class="card kpi-card">
+                                <div class="card-title">
+                                    <span class="kpi-icon">⭐</span>
+                                    <span>Top Product Today</span>
+                                </div>
+                                <div class="stat-value" id="mostSoldProductName" style="font-size: 1.3rem;">...Loading...</div>
+                                <div class="stat-label" id="mostSoldProductQty">Qty: ...</div>
+                            </div>
+                        </div>
+
+                        <!-- List Cards -->
+                        <div class="lists-row">
+                            <div class="card">
+                                <h2 class="card-title risk-title">🚨 Top 20 Stockout Risk</h2>
+                                <div class="loading-text" id="stockout-loading-text">Loading low stock products...</div>
+                                <ul class="list-container" id="stockout-risk-list"></ul>
+                            </div>
+
+                            <div class="card">
+                                <h2 class="card-title list-title">⭐ Top 5 Products (Today)</h2>
+                                <div class="loading-text" id="top-5-loading-text">Loading top 5 products...</div>
+                                <ul class="list-container" id="top-products"></ul>
+                            </div>
+                            
+                            <div class="card">
+                                <h2 class="card-title list-title">⬇️ Bottom 5 Products (Today)</h2>
+                                <div class="loading-text" id="bottom-5-loading-text">Loading bottom 5 products...</div>
+                                <ul class="list-container" id="bottom-5-products"></ul>
+                            </div>
+
+                            <div class="card">
+                                <h2 class="card-title list-title">🏆 Top 20 Products (This Month)</h2>
+                                <div class="loading-text" id="month-top-loading-text">Loading monthly top products...</div>
+                                <ul class="list-container" id="month-top-products"></ul>
+                            </div>
+                        </div>
+
+                        <!-- Charts -->
+                        <div class="charts-row">
+                            <div class="card">
+                                <div class="card-title">📊 Product Stock Analysis</div>
+                                <div class="chart-controls">
+                                    <label for="product-select">Select Product:</label>
+                                    <select id="product-select">
+                                        <option value="all-products">All Products Summary</option>
+                                    </select>
+                                </div>
+
+                                <table class="product-table" id="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Total Purchases</td><td id="table-purchase">...</td></tr>
+                                        <tr><td>Total Sells</td><td id="table-sell">...</td></tr>
+                                        <tr><td>Total Remaining</td><td id="table-remaining">...</td></tr>
+                                    </tbody>
+                                </table>
+                                
+                                <div class="chart-container">
+                                    <canvas id="stock-table-bar-chart"></canvas>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="card">
+                                <div class="card-title">📈 Daily Sales Trend (Last 30 Days)</div>
+                                <div class="chart-container">
+                                    <canvas id="dailySalesChart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-title">📉 Purchase vs Sell Overview</div>
+                                <div class="chart-container">
+                                    <canvas id="stockTotalChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+              </div>
+        </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/dashboard.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script>
+    <script>
+        // Initialize layout and highlight the 'Add Company' link
+        window.onload = function() {
+            initializeLayout('dashboard-standalone'); 
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Stock | Prescripty</title>
+    <!-- Font Awesome for spinner icon -->
+     <link rel="stylesheet" href="src/css/ViewStock.css">
+     <link rel="stylesheet" href="src/css/nav-layout.css">
+     <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+            <!-- Title Card -->
+            <div class="header-card">
+                <h1>Current Product Qty. in <span style="color: tomato;">Sub Stock</span> </h1>
+            </div>
+            <!-- Search Bar (NEW) -->
+            <div class="search-bar-container">
+                <div class="search-icon-wrapper">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" id="product-search" placeholder="Search product name or ID..." onkeyup="filterData()">
+            </div>
+
+            <!-- Content Area: Data Display -->
+            <div class="content-wrapper">
+                <div id="data-container">
+                    <div id="loading-indicator" class="loading-indicator">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading stock data, please wait...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    </div> 
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/ViewStock.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        window.addEventListener('load', function() {
+            // 1. Initialize the layout first
+            initializeLayout('view-stock-standalone'); 
+            });
+    </script>
+        <script>
+// Global variable to store all fetched data for filtering
+let allProducts = [];
+
+/**
+ * Filters the global stock data based on the search bar input and re-renders the view.
+ * This function should be called by the 'onkeyup' event in the HTML search bar.
+ */
+function filterData() {
+    const searchInput = document.getElementById('product-search');
+    // Check if search bar is ready and allProducts has data
+    if (!searchInput || allProducts.length === 0) return; 
+
+    const searchTerm = searchInput.value.toLowerCase().trim();
+
+    if (searchTerm === '') {
+        // If search term is empty, display all sorted products
+        // NOTE: processStockData() is assumed to be defined elsewhere for sorting
+        renderData(processStockData(allProducts));
+        return;
+    }
+
+    // Filter the products
+    const filteredProducts = allProducts.filter(row => {
+        // Data indices from the SHEET_RANGE ("Stock!A2:F"): 
+        // Product ID (A) is index 0, Product Name (B) is index 1
+        const productId = row[0] ? String(row[0]).toLowerCase() : '';
+        const productName = row[1] ? String(row[1]).toLowerCase() : '';
+
+        // Match against Product ID OR Product Name
+        return productId.includes(searchTerm) || productName.includes(searchTerm);
+    });
+
+    // Display the filtered and sorted results
+    renderData(processStockData(filteredProducts));
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product | Prescripty</title>
+    <link rel="stylesheet" href="src/css/TableAdd.css">
+    <link rel="stylesheet" href="src/css/nav-layout.css">
+    <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+    
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+                <h2>Add <span  style="color: tomato;">Products</span></h2>
+                <form id="productForm" action="https://script.google.com/macros/s/AKfycbwC4p_NVrG25kz4XqxrhviuDw8LZuQoO_CX7FM0as5bKPsKcm8uZFBZhFQVMU1675HU0g/exec?function=postProductData" method="post">
+                  <table id="product">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Product Name</th>
+                        <th>Product Type</th>
+                        <th>Generic Name</th>
+                        <th>Company Name</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr id="row1">
+                        <td>1</td>
+                        <td>
+                          <input type="text" name="product_name[]" list="productNamesList" required autocomplete="off">
+                          <datalist id="productNamesList"></datalist>
+                        </td>
+                        <td>
+                          <select name="product_type[]" required>
+                            <option value="">Select</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Capsule">Capsule</option>
+                            <option value="Syrup">Syrup</option>
+                            <option value="Injection">Injection</option>
+                            <option value="Infusion">Infusion</option>
+                            <option value="Suppository">Suppository</option>
+                            <option value="Lotion">Lotion</option>
+                            <option value="Sachet">Sachet</option>
+                            <option value="Spray">Spray</option>
+                            <option value="Surgicals">Surgicals</option>
+                            <option value="Others">Others</option>
+                          </select>
+                        </td>
+                        <td><input type="text" name="generic_name[]" list="genericNamesList" required autocomplete="off"></td>
+                        <td><input type="text" name="company_name[]" list="companyNamesList" required autocomplete="off"></td>
+                        <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button type="button" class="btn" onclick="addRow()">Add Row</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                
+                <!-- Data lists for generic names and company names -->
+                <datalist id="genericNamesList"></datalist>
+                <datalist id="companyNamesList"></datalist>
+            </div>
+        </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/AddProducts.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        // Initialize layout and highlight the 'Add Company' link
+        window.onload = function() {
+            initializeLayout('add-product-standalone'); 
+        };
+    </script>
+</body>
+</html>

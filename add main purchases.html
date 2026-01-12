@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Main Stock Purchase | Prescripty</title>
+    <link rel="stylesheet" href="src/css/TableAdd.css">
+    <link rel="stylesheet" href="src/css/nav-layout.css">
+    <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+    
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+                <h2>Add Purchase →<span  style="color: tomato;">From UHC Sadar</span></h2>
+                    <div class="date-picker-container">
+                        <label for="purchase_date">Select Date:</label>
+                        <input type="date" id="purchase_date" name="purchase_date" required>
+                    </div>
+                <form id="purchaseForm" action="https://script.google.com/macros/s/AKfycbx3VpRn1HQLoSiYWmWPUg4Sus6xYO3Obkxaz3Gp7LIENFfLGpG6DGWwp2VdX8Iv7AG9LQ/exec?function=postMainStockPurchaseDataMobilewithDate" method="post">
+                    <table id="purchase">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th  id="prodname">Product Name</th>
+                                <th>Product ID</th>
+                                <th>Current Stock</th>
+                                <th>Quantity</th>
+                                <th>Unit Price ($)</th>
+                                <th>Total Price ($)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                    <button type="button" class="btn" onclick="addRow()">Add Row</button>
+                    <button type="button" class="btn" onclick="addTwentyRows()">Add 20 Rows</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+        </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/AddMainStockPurchases.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        // Initialize layout and highlight the 'Add Company' link
+        window.onload = function() {
+            initializeLayout('add-main-purchase-standalone'); 
+        };
+    </script>
+</body>
+</html>

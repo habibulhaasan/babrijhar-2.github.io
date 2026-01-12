@@ -1,0 +1,147 @@
+        /* CSS Variables for easy color/spacing changes */
+        :root {
+            --primary-color: #2563eb; /* Blue 600 */
+            --primary-hover: #1d4ed8; /* Blue 700 */
+            --background-color: #f3f4f6;
+            --card-background: #ffffff;
+            --text-dark: #1f2937;
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --border-radius: 0.75rem;
+        }
+
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Login Card Styling */
+        .login-card {
+            width: 100%;
+            max-width: 448px; /* max-w-md equivalent */
+            background-color: var(--card-background);
+            padding: 2.5rem; /* p-10 equivalent */
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-2xl);
+            border: 1px solid #e5e7eb;
+        }
+
+        .login-card h1 {
+            font-size: 1.875rem; /* text-3xl equivalent */
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .login-card p {
+            text-align: center;
+            color: #6b7280; /* text-gray-500 equivalent */
+            margin-bottom: 2rem;
+        }
+
+        /* Form Group Styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem; /* text-sm equivalent */
+            font-weight: 600;
+            color: #374151; /* text-gray-700 equivalent */
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db; /* border-gray-300 equivalent */
+            border-radius: 0.5rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); /* focus:ring-2 focus:ring-blue-500 equivalent */
+        }
+
+        /* Button Styling */
+        #loginButton {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        #loginButton:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.15);
+        }
+        
+        #loginButton:disabled {
+            background-color: #93c5fd; /* Light blue for disabled state */
+            cursor: not-allowed;
+        }
+
+        /* Loading Spinner */
+        #spinner {
+            animation: spin 1s linear infinite;
+            margin-left: -0.25rem;
+            margin-right: 0.75rem;
+            height: 1.25rem;
+            width: 1.25rem;
+            color: white;
+        }
+        .hidden { display: none; }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Custom Message Box Styling (Positioned at top right) */
+        #message-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            transform: translateX(120%);
+        }
+        
+        #message-box.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Specific Message Box Colors */
+        .msg-success { background-color: #10b981; } /* Green */
+        .msg-error { background-color: #ef4444; } /* Red */

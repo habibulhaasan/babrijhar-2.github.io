@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Purchase | Prescripty</title>
+    <link rel="stylesheet" href="src/css/Report Sell Purchases.css">
+    <link rel="stylesheet" href="src/css/nav-layout.css">
+    <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+    
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+                <h1><span style="color: tomato;">Purchases</span> Report</h1>
+                  <!-- <div class="date-labels">
+                      <div class="date-label">
+                          <label for="start-date">Start Date:</label>
+                      </div>
+                      <div class="date-label">
+                          <label for="end-date">End Date:</label>
+                      </div>
+                  </div>
+                  <div class="date-picker">
+                      <input type="date" id="start-date">
+                      <input type="date" id="end-date">
+                  </div>
+                  <div class="button-container">
+                      <button id="show-data-btn">Show Data</button>
+                  </div> -->
+                  <div id="sell-data"></div>
+              </div>
+        </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/Report Purchases.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        // Initialize layout and highlight the 'Add Company' link
+        window.onload = function() {
+            initializeLayout('report-purchase-standalone'); 
+        };
+    </script>
+</body>
+</html>

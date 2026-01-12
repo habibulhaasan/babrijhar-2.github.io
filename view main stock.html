@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Main Stock | Prescripty</title>
+    <link rel="stylesheet" href="src/css/ViewStock.css">
+     <link rel="stylesheet" href="src/css/nav-layout.css">
+     <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+            <div class="header-card">
+                <h1>Current Product Qty. in <span style="color: tomato;">Main Stock</span></h1>
+            </div>
+
+                        <div class="search-bar-container">
+                <div class="search-icon-wrapper">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" id="product-search" placeholder="Search product name or ID..." onkeyup="filterData()">
+            </div>
+
+            <div id="total-remaining-stock-display" class="header-card total-quantity-card">
+                Total Remaining Stock: <span id="total-remaining-stock-value" class="text-blue font-bold">0</span>
+            </div>
+
+            <div class="content-wrapper">
+                <div id="data-container">
+                    <div id="loading-indicator" class="loading-indicator">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading stock data, please wait...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    </div> 
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/ViewMainStock.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        window.addEventListener('load', function() {
+            // 1. Initialize the layout first
+            initializeLayout('view-Main-stock-standalone'); 
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #0000001a;
+  transition: margin-left 0.3s ease; /* Add transition for smooth animation */
+  margin-left: 200px; /* Initially no margin */
+  margin-top: 7%;
+}
+
+h2 {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #6f7071f1;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+input[type="text"], select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus, select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+input[readonly] {
+  background-color: #f2f2f2;
+}
+
+select {
+
+  color: #333;
+  font-size: 16px;
+}
+
+select:focus {
+  color: #555;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Popup Message Styles */
+.popup-container {
+  position: fixed; /* Set position to fixed */
+  top: 50%; /* Align popup container to the center vertically */
+  left: 50%; /* Align popup container to the center horizontally */
+  transform: translate(-50%, -50%); /* Center the popup container */
+  text-align: center; /* Center align text */
+}
+
+.popup {
+  position: fixed; /* Set position to fixed */
+  top: 50%; /* Align popup to the center vertically */
+  left: 50%; /* Align popup to the center horizontally */
+  transform: translate(-50%, -50%); /* Center the popup */
+  background-color: #fff; /* Set background color */
+  padding: 20px; /* Add padding */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 8px; /* Add border radius */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  z-index: 9999; /* Set z-index */
+}
+
+.popup button {
+  margin-top: 10px; /* Add top margin */
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+/* CSS for the loading spinner */
+.spinner {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  z-index: 9999; /* Ensure it's on top */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+
+/* Mobile View Styles */
+@media only screen and (max-width: 768px) {
+  .container {
+    max-width: calc(100% - 20px);
+    margin: 20px auto;
+    margin-top: 15%;
+    padding: 10px;
+    margin-left: 0;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+  form thead th{
+    font-size: 7px;
+    text-align: center;
+  }
+
+  table th,
+  table td {
+    padding: 2px;
+  }
+/* Button Style Adjustments */
+.btn {
+  padding: 10px 15px; /* Larger buttons for easier click */
+  font-size: 12px; /* Smaller font size for better fit */
+  margin: 8px 0; /* Spacing between buttons */
+  width: 100%; /* Make buttons full width for easier tap */
+  box-sizing: border-box; /* Ensures buttons don't overflow */
+}
+
+/* Button Variants */
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Remove Row Button Adjustments */
+.btn-danger {
+  width: auto; /* Auto width for remove button */
+  padding: 6px 10px; /* Compact size */
+}
+
+/* For PurchaseForm */
+
+#purchaseForm table th:nth-child(6),
+#purchaseForm table td:nth-child(6),
+#purchaseForm table th:nth-child(7),
+#purchaseForm table td:nth-child(7),
+#purchaseForm table th:nth-child(8),
+#purchaseForm table td:nth-child(8),
+#purchaseForm table th:nth-child(3),
+#purchaseForm table td:nth-child(3) {
+  display: none;
+}
+
+/* For SellForm */
+#SellForm table th:nth-child(6),
+#SellForm table th:nth-child(7),
+#SellForm table td:nth-child(6),
+#SellForm table td:nth-child(7),
+#SellForm table th:nth-child(8),
+#SellForm table td:nth-child(8),
+#SellForm table th:nth-child(3),
+#SellForm table td:nth-child(3) {
+  display: none;
+}
+
+
+#prodname {
+  width: 120px; /* Adjust the width as needed */
+  max-width: 300px; /* Optional: To set a maximum width */
+  text-overflow: ellipsis; /* Optional: To handle overflow text */
+  white-space: nowrap; /* Optional: Prevent text wrapping */
+  overflow: hidden; /* Optional: Hide overflow text */
+}
+}
+
+@media only screen and (max-width: 768px) {
+  input[type="text"], select, input[type="number"] {
+      padding: 5px;
+      font-size: 12px;
+  }
+}
+
+
+.suggestions-box {
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  width: 70%;
+  background-color: white;
+  z-index: 999;
+  display: none; /* Initially hidden */
+}
+
+.suggestions-box div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestions-box div:hover {
+  background-color: #ddd;
+}
+
+
+/* new */
+  .date-picker-container {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.date-picker-container label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.date-picker-container input[type="date"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Mobile adjustments */
+@media only screen and (max-width: 768px) {
+  .date-picker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .date-picker-container label {
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+
+  .date-picker-container input[type="date"] {
+    width: 80%;
+    font-size: 12px;
+    padding: 6px;
+  }
+}
+  .content-card {
+    padding: 1rem;
+}

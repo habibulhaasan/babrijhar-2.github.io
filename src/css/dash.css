@@ -1,0 +1,290 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #eef2f6;
+    color: #333;
+}
+
+.dashboard {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: margin-left 0.3s ease; /* Add transition for smooth animation */
+    margin-left: 10px; /* Initially no margin */
+    margin-top: 7%;
+}
+
+.menu.show ~ .dashboard {
+    margin-left: 250px; /* Adjust this value based on your menu width */
+}
+
+header {
+    text-align: right;
+    color: #ffffff;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    padding: 0px 10px 0px 10px; /* Adjusted padding to remove bottom padding */
+    color: #000;
+    border-bottom: 3px solid #176ded; 
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.summary-cards {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.card {
+    background-color: #f9fbfc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    flex: 1;
+    min-width: 180px;
+    text-align: center;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 1em;
+    color: #0073e6;
+}
+
+.card p {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #333;
+}
+
+.card small {
+    color: #999;
+}
+
+.charts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.charts2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.chart {
+    background-color: #f9fbfc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    flex: 1;
+    min-width: 300px;
+}
+
+.chart h3 {
+    margin: 0 0 10px;
+    font-size: 1em;
+    color: #0073e6;
+}
+
+.chart canvas {
+    width: 100% !important;
+    height: 200px !important;
+}
+
+.top-right-logo {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+
+/* Chart */
+#stock-table-bar-chart {
+    max-width: 800px; /* Maximum width to ensure it doesn't stretch too much */
+    height: 550px; /* Height of the canvas */
+    border: 1px solid #ccc; /* Border around the canvas */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle 3D effect */
+    margin: 20px auto; /* Center the canvas and add margin */
+    background-color: #f9f9f9; /* Light background color */
+}
+
+#most-sold-product-chart {
+    margin-top: 100px;
+}
+
+/* Stock Chart */
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+#product-select {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.data-container {
+    margin-top: 20px;
+}
+
+#data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+#data-table th, #data-table td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: left;
+}
+
+#data-table th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+}
+
+#data-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#data-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+#data-table th, #data-table td {
+    padding: 5px 5px;
+}
+
+#data-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+#data-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+#data-table {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+
+/* sell Data table */
+
+
+.monthTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+.monthTable th, .monthTable td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: left;
+}
+
+.monthTable th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+}
+
+.monthTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.monthTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+.monthTable th, .monthTable td {
+    padding: 5px 5px;
+}
+
+.monthTable th {
+    background-color: #007bff;
+    color: white;
+}
+
+.monthTable tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.monthTable {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+
+/* Top 5 Product */
+.top5container {
+    width: 80%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  .product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  .product:last-child {
+    border-bottom: none;
+  }
+  .product-name {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .topproduct-quantity {
+    background-color: #1ae881;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  .product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+  .bottomproduct-quantity {
+    background-color: #f5061a;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }

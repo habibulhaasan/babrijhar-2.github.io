@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Company | Prescripty</title>
+    <link rel="stylesheet" href="src/css/TableAdd.css">
+    <link rel="stylesheet" href="src/css/nav-layout.css">
+    <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+    
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+                <h2>Add <span  style="color: tomato;">Companies</span></h2>                
+                <form id="companyForm" action="https://script.google.com/macros/s/AKfycbw4pi5LPCQmLsOR4dMmdocpvKrn-PulL_P7u_aVdyfOh2sYAKh7AuhJa-t5iiH7QfG3aw/exec?function=postCompanyData" method="post">
+                    <table id="company">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Company Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="row1">
+                                <td>1</td>
+                                <td><input type="text" name="company_name[]" required></td>
+                                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="button-group-dynamic"> 
+                         <button type="button" class="btn add-row-btn" onclick="addRow()">Add Row</button>
+                         <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/AddCompanies.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        // Initialize layout and highlight the 'Add Company' link
+        window.onload = function() {
+            initializeLayout('add-company-standalone'); 
+        };
+    </script>
+</body>
+</html>

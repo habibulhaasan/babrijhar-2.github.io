@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #0000001a;
+    transition: margin-left 0.3s ease; /* Add transition for smooth animation */
+    margin-left: 250px; /* Initially no margin */
+    margin-top: 7%;
+}
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+p{
+    text-align: center;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.form-group input[type="text"] {
+    width: 97%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+/* Popup Message Styles */
+.popup-container {
+    position: fixed; /* Set position to fixed */
+    top: 50%; /* Align popup container to the center vertically */
+    left: 50%; /* Align popup container to the center horizontally */
+    transform: translate(-50%, -50%); /* Center the popup container */
+    text-align: center; /* Center align text */
+  }
+  
+  .popup {
+    position: fixed; /* Set position to fixed */
+    top: 50%; /* Align popup to the center vertically */
+    left: 50%; /* Align popup to the center horizontally */
+    transform: translate(-50%, -50%); /* Center the popup */
+    background-color: #fff; /* Set background color */
+    padding: 20px; /* Add padding */
+    border: 1px solid #ccc; /* Add border */
+    border-radius: 8px; /* Add border radius */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    z-index: 9999; /* Set z-index */
+  }
+
+  .popup button {
+    margin-top: 10px; /* Add top margin */
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+
+  /* CSS for the loading spinner */
+.spinner {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    z-index: 9999; /* Ensure it's on top */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .container {
+        max-width: calc(100% - 40px); /* Adjust container width */
+        margin: 20px auto; /* Adjust margin */
+        padding: 10px; /* Adjust padding */
+        margin-top: 7%;
+    }
+
+    .form-group input[type="text"] {
+        font-size: 14px; /* Adjust font size */
+        width: 90%;
+    }
+
+    .btn {
+        font-size: 14px; /* Adjust font size */
+    }
+
+    /* Popup Message Styles */
+    .popup-container {
+        top: 50%; /* Align popup container to the center vertically */
+        left: 50%; /* Align popup container to the center horizontally */
+        transform: translate(-50%, -50%); /* Center the popup container */
+    }
+
+    .popup {
+        top: 50%; /* Align popup to the center vertically */
+        left: 50%; /* Align popup to the center horizontally */
+        transform: translate(-50%, -50%); /* Center the popup */
+        padding: 10px; /* Adjust padding */
+    }
+}

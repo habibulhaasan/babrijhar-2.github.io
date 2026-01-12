@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - | Prescripty</title>
+    <link rel="stylesheet" href="src/css/nav-layout.css">
+    <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+                <h2>Welcome to Your Dashboard!</h2>
+                <p>This is the main overview area. Use the navigation links to explore.</p>
+                <button class="btn btn-primary" onclick="window.location.href='Dashboard.html'">Go to Dashboard Page</button>
+            </div>
+        </main>
+
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script>
+        // Initialize layout and set the current page link as active
+        window.onload = function() {
+            initializeLayout('dashboard-standalone'); 
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Sell | Prescripty</title>
+    <!-- Font Awesome for spinner icon -->
+     <link rel="stylesheet" href="src/css/viewSell.css">
+     <link rel="stylesheet" href="src/css/nav-layout.css">
+     <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+            <!-- Title Card -->
+            <div class="header-card">
+                <h1>Sell Data <span style="color: tomato;">Sub Stock</span></h1>
+            </div>
+
+            <!-- Date Filter Card -->
+                <div class="header-card filter-card">
+                    <label for="date-filter" class="filter-label">Select a Date to Filter Sales:</label>
+                    <div class="filter-controls">
+                        <input type="date" id="date-filter" class="date-input" aria-label="Date Filter">
+                        <button id="clear-filter-btn" class="clear-btn" aria-label="Clear Date Filter">Clear Filter</button>
+                    </div>
+                </div>
+                        <!-- Search Bar (NEW) -->
+            <div class="search-bar-container">
+                <div class="search-icon-wrapper">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" id="product-search" placeholder="Search product name or ID..." onkeyup="filterData()">
+            </div>
+
+            <!-- Content Area: Data Display -->
+            <div class="content-wrapper">
+                <div id="data-container">
+                    <div id="loading-indicator" class="loading-indicator">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading data, please wait...</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+    </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/ViewSell copy.js.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        // Initialize layout and set the current page link as active
+        window.addEventListener('load', function() {
+            // 1. Initialize the layout first
+            initializeLayout('view-sell-standalone'); 
+            });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Login</title>
+    <link rel="stylesheet" href="src/css/Notification.css">
+    <!-- Font Import for a modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="src/css/Login.css">
+</head>
+<body>
+
+    <!-- Notification Message Box (Success/Error) -->
+    <div id="message-box"></div>
+
+    <!-- Login Card Container -->
+    <div class="login-card">
+        <h1>Babrijhar Inventory</h1>
+        <p>Babrijhar Union Health Sub Center<br> Sarad, Nilphamari</p>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <!-- Username/Client ID Field -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    required 
+                    placeholder="Enter your username"
+                >
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="password">App ID</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required 
+                    placeholder="Enter your App key"
+                >
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+                type="submit" 
+                id="loginButton"
+            >
+                <svg id="spinner" class="hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span id="buttonText">Login</span>
+            </button>
+        </form>
+    </div>
+
+    <script src="src/js/Login.js"></script>
+</body>
+</html>

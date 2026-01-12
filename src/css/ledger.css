@@ -1,0 +1,455 @@
+/* --- Base Styles for Ledger Page --- */
+
+/* Inherit base styles from nav-layout.css, focusing here on Ledger-specific components */
+:root {
+    --primary-color: #2563eb;
+    --background-color: #f3f4f6;
+    --border-color: #e5e7eb;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --header-height: 4rem; 
+}
+
+/* General Content Card Styling (Assuming .content-card is defined in nav-layout.css but adding context here) */
+.content-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 24px;
+    margin: 20px;
+    height: calc(100vh - 40px - var(--header-height)); /* Ensure content card is responsive to viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Main Layout: Two Columns on Desktop --- */
+.ledger-main-container {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1; /* Allow the container to fill the height of content-card */
+    min-height: 0; /* Critical for flex children to respect max height */
+}
+
+/* --- 1. Product List (Left Column) --- */
+.product-list {
+    width: 30%;
+    min-width: 250px;
+    border-right: 1px solid var(--border-color);
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Take full height of ledger-main-container */
+    overflow-y: hidden; /* Hide overflow of the main container, letting #productList handle scroll */
+}
+
+.product-list-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    flex-shrink: 0; /* Prevent search input from shrinking */
+}
+
+#searchInput:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* Desktop Product List (Scrollable) */
+#productList {
+    flex-grow: 1; /* Allows the list to take all remaining space */
+    overflow-y: auto; /* *** SCROLLABLE PRODUCT LIST *** */
+    padding-right: 5px; /* Space for scrollbar */
+    
+    /* Custom Scrollbar for modern look */
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-light) #f1f1f1;
+}
+
+#productList::-webkit-scrollbar {
+    width: 6px;
+}
+#productList::-webkit-scrollbar-thumb {
+    background-color: var(--text-light);
+    border-radius: 10px;
+}
+#productList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+/* Individual Product Item */
+.product-item {
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: background-color 0.15s, color 0.15s;
+    user-select: none;
+    border: 1px solid transparent;
+}
+
+.product-item:hover {
+    background-color: var(--background-color);
+}
+
+.product-item.selected {
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+}
+
+/* Hide Mobile Dropdown on Desktop */
+#productDropdown {
+    display: none;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-width: 120px;
+}
+
+/* --- 2. Ledger Content (Right Column) --- */
+.ledger-content {
+    flex-grow: 1;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Take full height of ledger-main-container */
+    overflow-y: hidden; /* Hide overflow of the main container, letting table container handle scroll */
+    min-width: 0; /* Flexbox fix */
+}
+
+#ledgerTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 15px 0 10px 0;
+    flex-shrink: 0;
+}
+
+hr {
+    flex-shrink: 0;
+}
+
+/* --- Filter and Action Buttons --- */
+.dropdown-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.dropdown-container select {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-width: 120px;
+}
+
+.dropdown-container select:focus {
+    border-color: var(--primary-color);
+}
+
+.button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: #fff;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.button:hover {
+    background-color: var(--primary-hover);
+}
+
+.button:active {
+    transform: scale(0.98);
+}
+
+/* --- Ledger Table Container --- */
+.scrollable-table-container {
+    overflow-x: auto; /* For horizontal scrolling if table is too wide */
+    overflow-y: auto; /* *** SCROLLABLE TABLE CONTENT *** */
+    flex-grow: 1; /* Allow the table container to fill available height */
+    padding-bottom: 10px; /* Space for horizontal scrollbar if needed */
+}
+
+#ledgerTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Ensure table is readable on smaller screens if they scroll horizontally */
+}
+
+#ledgerTable th,
+#ledgerTable td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+#ledgerTable thead th {
+    background-color: var(--background-color);
+    color: var(--text-dark);
+    font-weight: 600;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#ledgerTable tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Total Row Styling */
+#ledgerTable tfoot th {
+    background-color: var(--background-color);
+    color: var(--text-dark);
+    font-weight: 700;
+    border-top: 2px solid var(--primary-color);
+    border-bottom: none;
+    font-size: 1rem;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}
+
+#ledgerTable tfoot td {
+    background-color: var(--background-color);
+    color: var(--text-dark);
+    font-weight: 700;
+    border-top: 0px solid var(--primary-color);
+    border-bottom: none;
+    font-size: 1rem;
+    position: sticky;
+    bottom: -10px;
+    z-index: 10;
+}
+/* --- Loading Spinner (Kept for completeness) --- */
+#loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    border-radius: 12px;
+    transition: opacity 0.3s;
+    display: none; 
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Responsiveness for Mobile Devices --- */
+@media (max-width: 767px) {
+    
+    .ledger-main-container {
+        flex-direction: column; /* Stack columns */
+        min-height: auto;
+    }
+    
+    .content-card {
+        height: auto; /* Let content card expand on mobile */
+    }
+
+    /* Product List (now full width) */
+    .product-list {
+        width: 100%;
+        min-width: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-right: 0;
+        padding-bottom: 20px;
+        order: -1; /* Place list above ledger content */
+        height: auto; /* Reset height for mobile stacking */
+    }
+
+    /* Hide the desktop list and show the mobile dropdown */
+    #productList {
+        display: none;
+    }
+    #productDropdown {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    /* Search input and Dropdown styling adjustments */
+    #searchInput {
+        display: none; /* Hide desktop search when using dropdown on mobile */
+    }
+
+    /* Ledger Content (now full width) */
+    .ledger-content {
+        width: 100%;
+        padding-top: 10px;
+        height: auto; /* Reset height for mobile stacking */
+    }
+    
+    /* Filter and Button Layout */
+    .dropdown-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dropdown-container select,
+    .dropdown-container .button {
+        width: 100%;
+        margin-bottom: 8px; /* Add vertical spacing between stacked elements */
+    }
+    
+    .scrollable-table-container {
+        /* On mobile, ensure table scrolls horizontally if needed */
+        margin: 0 -10px;
+        padding: 0 10px;
+        overflow-y: hidden; /* Prevent vertical scroll on this container on mobile, let the body handle it */
+    }
+
+    #ledgerTable {
+        min-width: 500px; /* Ensure table remains usable */
+    }
+}
+/* --- Optimized Mobile Styles (Better Look) --- */
+@media (max-width: 600px) {
+    /* 1. Ensure dropdowns are full-width and stacked */
+    #monthSelect, #yearSelect {
+        width: 100%;
+        margin-bottom: 8px;
+        box-sizing: border-box; 
+    }
+
+    /* 2. Style the Button Container to use CSS Grid */
+    .action-buttons {
+        /* Use CSS Grid for a robust 2x2 layout */
+        display: grid;
+        /* Create two columns of equal width */
+        grid-template-columns: 1fr 1fr;
+        /* Set a gap (spacing) between the buttons */
+        gap: 8px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* 3. Style the individual buttons inside the grid */
+    .action-buttons .button {
+        /* Reset margins/paddings set elsewhere */
+        margin: 0;
+        /* Ensure the button text is legible */
+        font-size: 14px;
+        /* Increase padding for better tap target size */
+        padding: 10px 5px; 
+    }
+}
+
+/* --- Optimized Mobile Adjustments (Refined Table Layout) --- */
+@media only screen and (max-width: 768px) {
+  
+  /* 1. Container Optimization */
+  .container {
+    /* Use 100% width minus padding, and ensure no horizontal scroll from container itself */
+    max-width: 100%;
+    /* Reduce side margins for maximum horizontal space */
+    margin: 20px 10px; /* Use 10px on left/right */
+    margin-top: 15%;
+    padding: 5px; /* Reduce padding inside the container */
+    margin-left: 0;
+    box-sizing: border-box; /* Crucial: ensures padding is inside the width */
+  }
+
+  /* 2. Table and Cell Adjustments */
+  table {
+    /* Ensure table itself respects the container width */
+    width: 100%;
+    /* Reduce default margin */
+    margin-bottom: 10px;
+  }
+  
+  table th,
+  table td {
+    padding: 3px; /* Slightly increase padding from 2px for readability */
+    /* Use vertical alignment to center content in small cells */
+    vertical-align: middle;
+  }
+  
+  /* 3. Input Fields inside Tables */
+  input[type="text"], select, input[type="number"] {
+      padding: 5px; /* Slightly increase padding from 7px for better tap targets */
+      font-size: 10px; /* Use a legible, slightly larger font size than 8px */
+      /* Ensure inputs don't add extra width beyond the cell */
+      box-sizing: border-box; 
+      margin-top: 2px;
+      margin-bottom: 2px;
+  }
+
+  /* 4. Product Name Input (Specific ID Adjustment) */
+  #prodname {
+    /* Set max-width higher to allow longer product names, but let it flex */
+    max-width: 100%; 
+    width: 100%; /* Important: Takes up all available column width */
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    overflow: hidden; 
+  }
+  
+  /* 5. Button Adjustments (Ensure 'Remove Row' button fits) */
+  .btn-danger {
+    width: auto; 
+    padding: 4px 8px; /* Compact size for action column */
+    font-size: 10px;
+    margin: 0;
+  }
+  
+  /* 6. Suggestions Box (Ensure it doesn't break mobile layout) */
+  .suggestions-box {
+      /* Adjust width to follow the input */
+      width: calc(100% - 10px); /* 100% of container, minus margins */
+      left: 5px; /* Adjust position to respect new container margins */
+      right: 5px;
+      transform: none; /* Remove transform if present */
+  }
+
+}

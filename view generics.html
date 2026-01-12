@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Generic - Prescripty</title>
+    <!-- Font Awesome for spinner icon -->
+     <link rel="stylesheet" href="src/css/viewGeneric.css">
+     <link rel="stylesheet" href="src/css/nav-layout.css">
+     <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+            <!-- Title Card -->
+            <div class="header-card">
+                <h1>Showing the product with <span style="color: tomato;">Generic</span></h1>
+                <p>View details, links, and notes for all generic drugs in the catalog.</p>
+            </div>
+
+            <!-- Search Bar (NEW) -->
+            <div class="search-bar-container">
+                <div class="search-icon-wrapper">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" id="product-search" placeholder="Search product name or ID..." onkeyup="filterData()">
+            </div>
+
+            <!-- Content Area: Data Display -->
+            <div class="content-wrapper">
+                <div id="data-container">
+                    <div id="loading-indicator" class="loading-indicator">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading generic data, please wait...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/ViewGenerics.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        window.addEventListener('load', function() {
+            // 1. Initialize the layout first
+            initializeLayout('view-generic-standalone'); 
+            });
+    </script>
+</body>
+</html>

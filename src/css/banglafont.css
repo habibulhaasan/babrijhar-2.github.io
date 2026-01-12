@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'kalpurush';
+    src: url('../css/kalpurush.ttf') format('truetype'); /* Specify the correct path */
+    /* Add additional font properties if needed */
+}
+
+body {
+    font-family: 'kalpurush', sans-serif;
+}

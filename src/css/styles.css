@@ -1,0 +1,104 @@
+//* Global Stytles *//
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #0000001a;
+  transition: margin-left 0.3s ease; /* Add transition for smooth animation */
+  margin-left: 250px; /* Initially no margin */
+  margin-top: 7%;
+}
+
+h2 {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+}
+
+/* Media query for smaller screens */
+@media only screen and (max-width: 768px) {
+  .container {
+    margin-left: 0; /* Remove left margin on smaller screens */
+    border-radius: 0; /* Remove border radius on smaller screens */
+    box-shadow: none; /* Remove box shadow on smaller screens */
+  }
+}
+
+
+//* Developer Page *//
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Work Section */
+.work-section {
+  margin-bottom: 30px;
+}
+
+.work-section h2 {
+  color: #989898;
+  margin-bottom: 10px;
+}
+
+.work-section ul li {
+  margin-bottom: 10px;
+}
+
+.work-section a {
+  color: #007bff;
+  text-decoration: none;
+  text-decoration: none;
+  display: block;
+  display: flex;
+  align-items: center;
+}
+
+.work-section a:hover {
+  color: #f80404;
+  transition: transform 0.3s ease; /* Add transition for smooth animation */
+  transform: translateY(-3px); /* Initially move submenu up */
+}
+
+/* Contact Section */
+.contact-section {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.contact-section h2 {
+  color: #989898;
+  margin-bottom: 10px;
+}
+
+.contact-section ul li {
+  margin-bottom: 10px;
+}
+
+.contact-section a {
+  color: #007bff;
+  text-decoration: none;
+  text-decoration: none;
+  display: block;
+  display: flex;
+  align-items: center;
+}
+
+.contact-section a:hover {
+  color: #f80404;
+  transition: transform 0.3s ease; /* Add transition for smooth animation */
+  transform: translateY(-3px); /* Initially move submenu up */
+}

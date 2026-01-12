@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Purchase History - Prescripty</title>
+    <!-- Font Awesome for spinner icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        #main-content {
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header Card Style */
+        .header-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-top: 4px solid #9333ea; /* Purple border for Purchase */
+        }
+
+        .header-card h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .header-card p {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Filter Styles */
+        .filter-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 15px 20px;
+            border-top: 4px solid #3b82f6; /* Blue border for control */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .date-input {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            flex-grow: 1;
+            max-width: 250px;
+        }
+
+        .clear-btn {
+            background-color: #f4f4f9;
+            color: #666;
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .clear-btn:hover {
+            background-color: #ddd;
+        }
+
+        /* Loading Indicator Style */
+        .loading-indicator {
+            text-align: center;
+            padding: 50px;
+            color: #9333ea; /* Purple loading spinner */
+            font-size: 18px;
+        }
+        .loading-indicator i {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        /* Table Styles with Fixed Header */
+        .responsive-table-wrapper {
+            overflow-x: auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 0 10px 10px;
+            max-height: 75vh;
+            overflow-y: auto;
+            margin-top: 20px; /* Add margin after filter card */
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; 
+        }
+
+        .data-table thead {
+            position: sticky; 
+            top: 0; 
+            z-index: 10;
+            background-color: #ffffff;
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table thead th {
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .data-table tbody td {
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #f3e8ff; /* Light purple hover */
+        }
+        
+        /* General utility classes */
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .text-purple { color: #6d28d9; } /* Deep purple for quantity */
+
+        /* Mobile Card View Styles */
+        .mobile-card-view {
+            display: block; 
+            margin-top: 20px;
+        }
+
+        .data-card-mobile {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            border-left: 4px solid #9333ea; /* Purple border for cards */
+        }
+
+        .card-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 14px;
+        }
+        
+        .card-row-header {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+        }
+
+        .label {
+            color: #666;
+            font-weight: 500;
+        }
+        .value {
+            color: #333;
+            font-weight: 500;
+            word-break: break-all;
+        }
+    
+        /* Media Query for Desktop (hiding mobile view and showing table) */
+        @media (min-width: 768px) {
+            .mobile-card-view {
+                display: none; /* Hide cards on desktop */
+            }
+            .responsive-table-wrapper {
+                display: block; /* Show table on desktop */
+            }
+        }
+
+        /* Media Query for Mobile (hiding table and showing mobile view) */
+        @media (max-width: 767px) {
+             .responsive-table-wrapper {
+                display: none; /* Hide table on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Placeholders for layout integration -->
+    <div id="header-placeholder"></div>
+
+    <div class="main-layout-container">
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="container">
+                <!-- Title Card -->
+                <div class="header-card">
+                    <h1>Product Purchase History</h1>
+                    <p>Detailed log of products procured (Date, ID, Name, Quantity).</p>
+                </div>
+                
+                <!-- Date Filter Card -->
+                <div class="header-card filter-card">
+                    <label for="date-filter" class="filter-label">Select a Date to Filter Purchases:</label>
+                    <div class="filter-controls">
+                        <input type="date" id="date-filter" class="date-input" aria-label="Date Filter">
+                        <button id="clear-filter-btn" class="clear-btn" aria-label="Clear Date Filter">Clear Filter</button>
+                    </div>
+                </div>
+
+                <!-- Content Area: Data Display -->
+                <div class="content-wrapper">
+                    <div id="data-container">
+                        <!-- Loading Indicator is placed here initially -->
+                        <div id="loading-indicator" class="loading-indicator">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading purchase data, please wait...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Load the layout script -->
+    <script src="src/js/nav-layout.js"></script>
+
+    <script>
+        // API Configuration
+        const API_KEY = "AIzaSyD7eX6VGCDHXBzF63CAHDfaP1-WFp3jcoI";
+        const SHEET_ID = "1lLzGvnJBQKPFpRPSRYjb_Q6N80G9mB_7_sLPR-0N5Ng";
+        // CRITICAL: Updated sheet name to 'Purchase' and using range A2:D
+        const SHEET_RANGE = "Purchases!A2:D"; 
+        const API_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_RANGE}?key=${API_KEY}`;
+        const MAX_RETRIES = 5;
+
+        // Global variable to hold the full, unfiltered purchase data
+        let allPurchaseData = [];
+
+        /**
+         * Utility function to format numbers for display.
+         * Using standard 'en-US' locale for general clarity.
+         * @param {string|number} number The quantity value.
+         * @returns {string} The formatted number.
+         */
+        function formatNumber(number) {
+            const num = Number(number);
+            if (isNaN(num)) return String(number);
+            // Use standard US formatting (optional comma grouping)
+            return new Intl.NumberFormat('en-US').format(num); 
+        }
+
+        /**
+         * Helper function to determine the sorting priority of a product based on its type.
+         * Tablet (1) < Capsule (2) < Syrup (3) < Other (4)
+         * @param {string} productName 
+         * @returns {number} The priority order.
+         */
+        function getProductTypePriority(productName) {
+            if (!productName) return 4;
+            const name = productName.toLowerCase();
+            if (name.includes('tablet')) return 1;
+            if (name.includes('capsule')) return 2;
+            if (name.includes('syrup')) return 3;
+            return 4; // Other
+        }
+
+        /**
+         * Custom sort function for purchase data:
+         * 1. Primary Sort: Date (Latest Day First = Descending)
+         * 2. Secondary Sort: Product Type (Tablet, Capsule, Syrup, Other = Ascending)
+         * @param {Array<string>} a A purchase row [date, id, name, quantity]
+         * @param {Array<string>} b A purchase row [date, id, name, quantity]
+         * @returns {number} -1, 0, or 1
+         */
+        function customPurchaseSort(a, b) {
+            // Get YYYY-MM-DD for date comparison
+            const dateA = standardizeSheetDate(a[0]); 
+            const dateB = standardizeSheetDate(b[0]);
+
+            // Primary Sort: Latest Date First (Descending Order)
+            if (dateA > dateB) return -1;
+            if (dateA < dateB) return 1;
+
+            // Secondary Sort: Product Type (Ascending Order: Tablet < Capsule < Syrup)
+            const typeA = getProductTypePriority(a[2]); // a[2] is Product Name
+            const typeB = getProductTypePriority(b[2]);
+
+            if (typeA < typeB) return -1;
+            if (typeA > typeB) return 1;
+
+            // Tertiary Sort (Tie-breaker): If same date and same type, maintain original sheet order (0)
+            return 0; 
+        }
+
+
+        /**
+         * Utility function to format date string to standard MM/DD/YYYY format for DISPLAY.
+         * NOTE: Bengali locale conversion removed per user request.
+         * @param {string} dateString The raw date string from the Google Sheet.
+         * @returns {string} The formatted date string.
+         */
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            
+            try {
+                // IMPORTANT: Use the standardized date part for display formatting
+                const datePart = dateString.split(',')[0].trim(); 
+                
+                // DD/MM/YYYY format requires manual parsing for correct Date object creation
+                const parts = datePart.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+                let date;
+
+                if (parts) {
+                    // Reconstruct in YYYY-MM-DD format for Date() constructor to interpret correctly
+                    date = new Date(`${parts[3]}-${parts[2]}-${parts[1]}T00:00:00`); 
+                } else {
+                    // Fallback for other formats
+                    date = new Date(dateString);
+                }
+
+                if (isNaN(date.getTime())) {
+                    return String(dateString); // Fallback to raw string
+                }
+
+                // Format to standard MM/DD/YYYY or similar local format using 'en-US' locale
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                });
+
+            } catch (e) {
+                console.error("Date formatting error:", e);
+                return 'N/A';
+            }
+        }
+        
+        /**
+         * Utility function to convert Sheets date string into YYYY-MM-DD format for internal COMPARISON (filtering).
+         * @param {string} dateString The raw date string from the Google Sheet.
+         * @returns {string|null} The standardized YYYY-MM-DD string or null if conversion fails.
+         */
+        function standardizeSheetDate(dateString) {
+            if (!dateString) return null;
+            dateString = dateString.trim();
+
+            // Capture DD, MM, YYYY at the start of the string, ignoring the timestamp
+            const parts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/); 
+            
+            if (parts) {
+                let [_, day, month, year] = parts;
+
+                // Handle 2-digit year (e.g., 24 -> 2024). Assumes 20xx century.
+                if (year.length === 2) {
+                    year = '20' + year;
+                }
+
+                // Return YYYY-MM-DD format for comparison with HTML input type="date"
+                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+            }
+            
+            // Fallback for other formats
+            try {
+                const date = new Date(dateString);
+
+                if (!isNaN(date.getTime())) {
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    return `${year}-${month}-${day}`;
+                }
+            } catch (e) {
+                // Ignore soft error
+            }
+
+            if (dateString) {
+                console.warn(`Could not standardize date for filtering: ${dateString}`);
+            }
+            return null; 
+        }
+
+
+        // Function to render the provided data (either all data or filtered data)
+        function renderData(data) {
+            const dataContainer = document.getElementById('data-container');
+            
+            if (!data || data.length === 0) {
+                dataContainer.innerHTML = `
+                    <div class="header-card alert alert-warning" role="alert" style="border-top: 4px solid #f97316;">
+                        <strong>No Data Found</strong>
+                        <p>No purchase entries match the current filter or sheet range.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Headers for A2:D (4 columns: Date, Product ID, Product Name, Quantity)
+            const header = ['Date', 'Product ID', 'Product Name', 'Quantity'];
+            
+            // --- 1. Desktop Table View ---
+            let tableHTML = `
+                <div class="responsive-table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                ${header.map(h => `<th>${h}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            data.forEach(row => {
+                // Destructure based on A:D (4 columns)
+                const [date, productId, productName, quantity] = row.map(v => v ? String(v).trim() : 'N/A');
+
+                // Conversion for display (Now using standard US format per request)
+                const fDate = formatDate(date);
+                // Conversion for quantity (Standard English numerals)
+                const fQuantity = formatNumber(quantity);
+
+                tableHTML += `
+                    <tr>
+                        <td>${fDate}</td>
+                        <td>${productId}</td>
+                        <td class="font-semibold">${productName}</td>
+                        <td class="text-purple font-bold">${fQuantity}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+
+            // --- 2. Mobile Card View ---
+            let cardHTML = `
+                <div class="mobile-card-view">
+            `;
+
+            data.forEach((row) => {
+                // Destructure based on A:D (4 columns)
+                const [date, productId, productName, quantity] = row.map(v => v ? String(v).trim() : 'N/A');
+
+                // Conversion for display (Now using standard US format per request)
+                const fDate = formatDate(date);
+                // Conversion for quantity (Standard English numerals)
+                const fQuantity = formatNumber(quantity);
+                
+                cardHTML += `
+                    <div class="data-card-mobile">
+                        <div class="card-row card-row-header">
+                            <span class="value font-bold">${productName}</span>
+                            <span class="label">ID: <span class="value">${productId}</span></span>
+                        </div>
+                        
+                        <div class="card-row">
+                            <span class="label">Date:</span>
+                            <span class="value">${fDate}</span>
+                        </div>
+                        
+                        <div class="card-row">
+                            <span class="label">Quantity:</span>
+                            <span class="value text-purple font-bold">${fQuantity}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cardHTML += `
+                </div>
+            `;
+
+            dataContainer.innerHTML = tableHTML + cardHTML;
+        }
+
+        // Function to filter data based on selected date and trigger renderData
+        function applyDateFilter(selectedDate) {
+            
+            // If the selectedDate is empty (or null/undefined), render all (already sorted) data
+            if (!selectedDate || selectedDate === '') {
+                renderData(allPurchaseData);
+                return;
+            }
+
+            // Filter the global data
+            const filteredData = allPurchaseData.filter(row => {
+                // row[0] is the raw date string from the Sheets data
+                const sheetDateString = row[0] || '';
+                
+                // Convert the Sheet's date string into the comparison format (YYYY-MM-DD)
+                const standardizedSheetDate = standardizeSheetDate(sheetDateString);
+
+                // Compare the standardized Sheet date with the input date (which is YYYY-MM-DD)
+                return standardizedSheetDate === selectedDate;
+            });
+            
+            // The filtered data will maintain the sorted order of the original array
+            renderData(filteredData);
+        }
+
+        // Function to fetch data from Google Sheets API with exponential backoff
+        async function fetchPurchaseDataAndRender() {
+            const dataContainer = document.getElementById('data-container');
+            const loadingIndicator = document.getElementById('loading-indicator');
+
+            // Show loading
+            if (loadingIndicator) loadingIndicator.classList.remove('hidden');
+            dataContainer.innerHTML = ''; 
+            dataContainer.appendChild(loadingIndicator); // Re-add indicator
+
+            for (let i = 0; i < MAX_RETRIES; i++) {
+                try {
+                    const response = await fetch(API_URL);
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        // This logs the raw error for debugging the 400 issue if it reoccurs
+                        console.error(`API Fetch Error Details (Attempt ${i + 1}):`, errorText);
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    
+                    if (loadingIndicator) loadingIndicator.classList.add('hidden');
+                    
+                    // 1. SAVE the full data set globally
+                    allPurchaseData = data.values || [];
+                    
+                    // CRITICAL UPDATE: Sort the data by date (latest first) and then by product type
+                    allPurchaseData.sort(customPurchaseSort);
+                    
+                    // 2. Render all data initially (no filter applied)
+                    renderData(allPurchaseData);
+                    return; // Success
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed:`, error);
+                    if (i === MAX_RETRIES - 1) {
+                        if (loadingIndicator) loadingIndicator.classList.add('hidden');
+                        
+                        let failureMessage = `
+                            <strong>Error!</strong> Failed to load purchase data. 
+                            Please check if your <code>API_KEY</code> and <code>SHEET_ID</code> 
+                            are correct, and if the 'Purchase' sheet is accessible.
+                        `;
+
+                        dataContainer.innerHTML = `
+                            <div class="header-card alert alert-error" role="alert" style="border-top: 4px solid #ef4444;">
+                                ${failureMessage}
+                            </div>
+                        `;
+                        return; // Final failure
+                    }
+                    // Exponential backoff
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        // --- Initialization and Event Setup ---
+        window.addEventListener('load', function() {
+            // 1. Initialize the layout
+            // Assumes initializeLayout is provided by nav-layout.js
+            if (typeof initializeLayout === 'function') {
+                initializeLayout('view-purchase-standalone'); 
+            } else {
+                console.warn("initializeLayout function not found. Skipping layout initialization.");
+            }
+            
+            // 2. Fetch and render data
+            fetchPurchaseDataAndRender();
+            
+            // 3. Setup event handlers for filtering
+            const dateFilterInput = document.getElementById('date-filter');
+            const clearFilterBtn = document.getElementById('clear-filter-btn');
+
+            dateFilterInput.addEventListener('change', (e) => {
+                applyDateFilter(e.target.value);
+            });
+
+            clearFilterBtn.addEventListener('click', () => {
+                dateFilterInput.value = ''; // Clear the input field
+                applyDateFilter(''); // Pass empty string to trigger full render
+            });
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+/* --- Global & Base Styles (From your original CSS) --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden; /* Prevents horizontal scroll from fixed elements */
+}
+
+/* --- Layout & Structure --- */
+
+.container {
+    max-width: 900px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: margin-left 0.3s ease, max-width 0.3s ease;
+    
+    /* Default (Open Sidebar) State */
+    margin: 74px 20px 50px 215px; /* Top margin accounts for fixed header height (64px + padding) */
+}
+
+.container.shifted {
+    /* Collapsed Sidebar State */
+    margin-left: 75px; 
+}
+
+/* --- Navigation Sidebar Styles --- */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px; /* Open width */
+    height: 100vh;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease, transform 0.3s ease;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.collapsed {
+    width: 60px; /* Collapsed width */
+}
+
+.menu-header {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    min-height: 64px; 
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.sidebar.collapsed .collapsed-logo {
+    display: none;
+}
+/* Center icon/logo when collapsed */
+.sidebar.collapsed .menu-header {
+    justify-content: center;
+}
+
+.no-scrollbar {
+    flex-grow: 1;
+    overflow-y: auto; /* Allow scrolling for the menu items */
+    padding: 1rem 0;
+}
+
+/* Base Link Style */
+.menu-item a {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: #4a5568; 
+    text-decoration: none;
+    transition: background-color 0.15s, color 0.15s;
+    font-size: 0.95rem;
+}
+
+.menu-icon {
+    margin-right: 0.75rem;
+    width: 1.5rem;
+    text-align: center;
+}
+
+.sidebar.collapsed .menu-text,
+.sidebar.collapsed .submenu-arrow {
+    display: none;
+}
+
+.sidebar.collapsed .menu-item a {
+    justify-content: center;
+    padding: 0.5rem 0;
+}
+
+/* Submenu Styles - Use max-height transition for smooth animation */
+.submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #f7fafc;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.submenu.open {
+    max-height: 500px; /* Must be large enough */
+}
+
+.submenu a {
+    padding: 0.5rem 1rem 0.5rem 2.5rem; /* Indented */
+}
+
+/* User Profile Footer */
+.user-profile-container {
+    padding: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.sidebar.collapsed .user-profile-container {
+    display: none; /* Hide profile section completely when collapsed */
+}
+
+
+/* --- Header Styles --- */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 200px; /* Starts after the open sidebar */
+    right: 0;
+    height: 64px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    z-index: 50; 
+    transition: left 0.3s ease;
+}
+
+header.shifted {
+    left: 60px; /* Shifts when sidebar collapses */
+}
+
+/* Utility classes to emulate Tailwind */
+.flex { display: flex; }
+.items-center { align-items: center; }
+.space-x-4 > * + * { margin-left: 1rem; }
+.space-x-2 > * + * { margin-left: 0.5rem; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.hidden { display: none !important; }
+.rounded-full { border-radius: 9999px; }
+
+/* ... (Keep your original .btn, input, table styles) ... */
+
+
+/* --- Mobile View Styles (Optimization) --- */
+@media only screen and (max-width: 768px) {
+    
+    /* 1. Sidebar - Off-canvas setup */
+    .sidebar {
+        width: 250px; /* Give it a decent width on mobile */
+        transform: translateX(-100%); /* Start completely off-screen */
+        box-shadow: 5px 0 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0); /* Slide into view */
+    }
+
+    /* 2. Header - Full width on mobile */
+    header, header.shifted {
+        left: 0; 
+        padding: 0 1rem;
+    }
+
+    /* 3. Main Content - Full width and margin adjusted for fixed header */
+    .container, .container.shifted {
+        max-width: calc(100% - 20px);
+        margin: 74px auto 20px auto; /* Centered, only top margin matters */
+    }
+
+    /* Remove the mobile hiding rules from the desktop-style container class */
+    .container {
+        margin-left: auto; /* Reset desktop margin */
+    }
+
+    /* Your existing table/form mobile styles... */
+    /* ... */
+}

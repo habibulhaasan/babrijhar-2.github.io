@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover-to-Expand Dashboard</title>
+    <!-- Removed Tailwind CDN and configuration -->
+    
+    <!-- Load Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* DASHBOARD LAYOUT STYLES (Pure CSS Implementation) */
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        :root {
+            --header-height: 4rem; /* 64px */
+            --sidebar-width: 18rem; /* 288px (Expanded) */
+            --sidebar-collapsed-width: 4rem; /* 64px (Collapsed) */
+            --primary-color: #4f46e5; /* Indigo-700 equivalent */
+            --primary-hover: #4338ca;
+            --background-color: #f3f4f6;
+            --border-color: #e5e7eb;
+            --text-dark: #1f2937;
+            --text-medium: #374151;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* --- Global Structural Components --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: white;
+            z-index: 20;
+            /* Transitions for width and transform */
+            transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        #main-content {
+            flex-grow: 1;
+            margin-top: var(--header-height);
+            padding: 1rem;
+            /* Transition for the content shift (margin) */
+            transition: margin-left 0.3s ease-in-out;
+            border-radius: 0.75rem; /* rounded-xl equivalent */
+        }
+
+        .main-header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: var(--header-height);
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            width: 100%;
+            /* Transition for the header shift (left/width) */
+            transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+        }
+
+        /* --- Navigation Link Styling --- */
+        .menu-list a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.25rem;
+            margin: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+
+        .menu-list a:hover {
+            background-color: var(--background-color);
+        }
+
+        .menu-list a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .menu-list a.active .menu-icon {
+            color: white;
+        }
+
+        .menu-icon {
+            font-size: 1.25rem;
+            margin-right: 0.75rem;
+            color: var(--text-medium);
+            width: 1.5rem; 
+            text-align: center;
+            transition: margin 0.3s ease, width 0.3s ease;
+        }
+        
+        .nav-label {
+            white-space: nowrap;
+            overflow: hidden;
+            opacity: 1;
+            transition: opacity 0.3s ease 0.1s, width 0.3s ease 0.1s;
+        }
+        
+        /* State for hiding labels */
+        .nav-label.hidden {
+            opacity: 0;
+            width: 0;
+            pointer-events: none;
+        }
+
+        /* Submenu Container Styles */
+        .submenu-container {
+            margin: 0.25rem 0.5rem;
+        }
+
+        .submenu-link {
+            position: relative;
+        }
+
+        .submenu-toggle-icon {
+            position: absolute;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-medium);
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .submenu-toggle-icon.rotated {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            padding-left: 0.5rem; /* Indentation for sub-items */
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .submenu .menu-link {
+            padding-left: 3rem; /* Further indent sub-links */
+        }
+
+        /* --- User Profile Styling --- */
+        .nav-user {
+            margin-top: auto;
+            padding: 1rem 0.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-user-details {
+            overflow: hidden;
+            transition: opacity 0.3s ease 0.1s, height 0.3s ease;
+        }
+
+        /* State for hiding user details */
+        .nav-user-details.hidden {
+            opacity: 0;
+            height: 0;
+            margin-left: -0.75rem; 
+            pointer-events: none;
+        }
+        
+        /* --- General Element Styling (Search, Buttons, Content) --- */
+
+        .header-search-container {
+            flex-grow: 1;
+            max-width: 32rem; /* max-w-lg equivalent */
+            margin: 0 1rem;
+            display: none; /* hidden by default */
+        }
+
+        @media (min-width: 640px) { /* sm:block equivalent */
+            .header-search-container {
+                display: block;
+            }
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.5rem; /* pl-10 pr-4 equivalent */
+            font-size: 0.875rem; /* text-sm equivalent */
+            border-radius: 0.5rem; /* rounded-lg equivalent */
+            border: 1px solid #d1d5db; /* border-gray-300 equivalent */
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+
+        .header-btn-group {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem; /* space-x-4 equivalent */
+        }
+        
+        .header-btn {
+            padding: 0.5rem;
+            color: var(--text-medium);
+            border-radius: 9999px; /* rounded-full equivalent */
+            transition: color 0.15s ease;
+        }
+        .header-btn:hover {
+            color: var(--text-dark);
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            margin-top: 0.5rem;
+            width: 12rem; /* w-48 equivalent */
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl equivalent */
+            z-index: 30;
+            border: 1px solid var(--border-color);
+            display: none; /* Controlled by JS */
+        }
+        
+        .dropdown-menu.notifications {
+            width: 16rem; /* w-64 equivalent */
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: background-color 0.15s ease;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f3f4f6; /* gray-100 equivalent */
+        }
+        .dropdown-menu .sign-out:hover {
+            background-color: #fef2f2; /* red-50 equivalent */
+            color: #dc2626; /* red-600 equivalent */
+        }
+        
+        .content-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* --- Responsive & Desktop Layout (lg breakpoint: 1024px) --- */
+        @media (min-width: 1024px) { 
+            /* Default Collapsed Desktop State */
+            .sidebar {
+                width: var(--sidebar-collapsed-width); /* 4rem */
+                transform: translateX(0) !important; 
+            }
+            
+            #main-content {
+                margin-left: var(--sidebar-collapsed-width); /* 4rem */
+            }
+            
+            .main-header {
+                left: var(--sidebar-collapsed-width);
+                width: calc(100% - var(--sidebar-collapsed-width));
+            }
+
+            /* Icon Alignment Fix in Collapsed state */
+            .sidebar:not(.expanded) .menu-list a {
+                justify-content: center;
+                padding: 0.75rem 0.5rem;
+            }
+            
+            .sidebar:not(.expanded) .menu-icon {
+                margin: 0;
+                width: auto;
+            }
+            
+            /* Hide toggle icon and submenus when collapsed */
+            .sidebar:not(.expanded) .submenu-toggle-icon {
+                display: none;
+            }
+            .sidebar:not(.expanded) .submenu {
+                display: none;
+            }
+
+
+            /* Expanded Desktop State (when JS applies 'expanded' class) */
+            .sidebar.expanded {
+                width: var(--sidebar-width) !important; /* 18rem */
+            }
+            #main-content.expanded {
+                margin-left: var(--sidebar-width) !important;
+            }
+            .main-header.expanded {
+                left: var(--sidebar-width);
+                width: calc(100% - var(--sidebar-width));
+            }
+        }
+
+        /* --- Mobile Layout (max-width: 1023px) --- */
+        @media (max-width: 1023px) { 
+            .sidebar {
+                width: var(--sidebar-width);
+                transform: translateX(-100%); /* Start hidden off-screen */
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            }
+            
+            /* Mobile Expanded State (when JS applies 'expanded' class) */
+            .sidebar.expanded {
+                transform: translateX(0%);
+            }
+
+            #main-content, .main-header {
+                margin-left: 0;
+                left: 0;
+                width: 100%;
+            }
+
+            /* Show Menu toggle button on mobile */
+            .menu-toggle-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header-placeholder">
+        <!-- Header will be injected here by JavaScript -->
+    </div>
+
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder">
+            <!-- Sidebar will be injected here by JavaScript -->
+        </div>
+
+        <main id="main-content">
+            <div class="content-card">
+                <h1 style="font-size: 1.875rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">Dashboard Overview</h1>
+                <p style="color: #4b5563;">This is the main content area. The sidebar to the left will expand when you hover over it on desktop screens (1024px+).</p>
+                <div style="margin-top: 1.5rem; padding: 1rem; border: 1px solid #c7d2fe; background-color: #eef2ff; border-radius: 0.5rem;">
+                    <p style="font-weight: 500; color: #4f46e5;">Test the responsiveness!</p>
+                    <ul style="list-style-type: disc; list-style-position: inside; font-size: 0.875rem; color: #4f46e5; margin-top: 0.5rem;">
+                        <li>**Desktop:** Hover over the left sidebar to expand it from 4rem to 18rem. Click "Action", "View", "Reports", or "Info" to toggle the sub-menus.</li>
+                        <li>**Mobile:** Reduce the screen width. The sidebar will hide off-screen, and the **Menu** button at the top left will toggle it.</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        // JAVASCRIPT LOGIC
+        // Updated to use the new 'expanded' custom CSS class and support nested navigation.
+
+        const userProfile = {
+            name: "Hasan T.P.",
+            email: "hasanthp@gmail.com",
+            designation: "Pharmacist",
+            office: "Babrijhar Health Seb Center",
+            imgUrl: "https://placehold.co/40x40/4f46e5/ffffff?text=HP" 
+        };
+        
+        // New hierarchical navigation data from user
+        const fullNavItems = [
+            { 
+                name: "Dashboard", 
+                icon: "fa-solid fa-dashboard", 
+                href: "index.html", 
+                pageId: "dashboard-standalone", 
+                sub: [] 
+            },
+            { 
+                name: "Action", 
+                icon: "fa-solid fa-plus-circle", 
+                href: "#action", 
+                pageId: "action-group",
+                sub: [
+                    { 
+                        name: "Sell Mobile", 
+                        href: "Add Sell Mobile.html", 
+                        pageId: "add-sell-mob-standalone" 
+                    }, 
+                    { 
+                        name: "Purchase Mobile", 
+                        href: "Add Purchases Mobile.html", 
+                        pageId: "add-purchase-mob-standalone" 
+                    },
+                    { 
+                        name: "Add Sell", 
+                        href: "Add Sell.html", 
+                        pageId: "add-sell-standalone" 
+                    },
+                    { 
+                        name: "Add Purchase", 
+                        href: "Add Purchases.html", 
+                        pageId: "add-purchase-standalone" 
+                    },
+                    { 
+                        name: "Add Product", 
+                        href: "Add Products.html", 
+                        pageId: "add-product-standalone" 
+                    },
+                    { 
+                        name: "Add Generic", 
+                        href: "Add Generics.html", 
+                        pageId: "add-generic-standalone" 
+                    }, 
+                    { 
+                        name: "Add Company", 
+                        href: "Add Companies.html", 
+                        pageId: "add-company-standalone" 
+                    }, 
+                ]
+            },
+            { 
+                name: "View", 
+                icon: "fa-solid fa-eye", 
+                href: "#view", 
+                pageId: "view-group",
+                sub: [
+                    { 
+                        name: "View Purchase", 
+                        href: "View Purchases.html",
+                        pageId: "view-purchase-standalone" 
+                    },
+                    { 
+                        name: "View Sell", 
+                        href: "View Sell.html",
+                        pageId: "view-sell-standalone" 
+                    },
+                    { 
+                        name: "View Product", 
+                        href: "View Products.html",
+                        pageId: "view-pruducts-standalone" 
+                    },
+                    { 
+                        name: "View Generic", 
+                        href: "View Generics.html",
+                        pageId: "view-generic-standalone" 
+                    },
+                    { 
+                        name: "View Company", 
+                        href: "View Companies.html",
+                        pageId: "view-company-standalone" 
+                    },
+                    { 
+                        name: "View Stock", 
+                        href: "View Stock.html",
+                        pageId: "view-stock-standalone" 
+                    },
+                ]
+            },
+            { 
+                name: "Reports", 
+                icon: "fa-solid fa-chart-line", 
+                href: "#reports", 
+                pageId: "reports-group",
+                sub: [
+                    { 
+                        name: "Ledger", 
+                        href: "Ledger.html",
+                        pageId: "ledger-standalone" 
+                    },
+                    { 
+                        name: "Sell Reports", 
+                        href: "Report Sell.html",
+                        pageId: "report-sell-standalone" 
+                    },
+                    { 
+                        name: "Purchases Reports", 
+                        href: "Report Purchases.html",
+                        pageId: "report-purchase-standalone" 
+                    },
+                ]
+            },
+            { 
+                name: "Info", 
+                icon: "fa-solid fa-circle-info", 
+                href: "#info", 
+                pageId: "info-group",
+                sub: [
+                    { 
+                        name: "Developer", 
+                        href: "Developer.html",
+                        pageId: "developer-standalone" 
+                    },
+                    { 
+                        name: "FAQ", 
+                        href: "FAQ.html",
+                        pageId: "faq-standalone" 
+                    },
+                    {
+                        name: "Requirements", 
+                        href: "Requirement.html",
+                        pageId: "requirement-standalone" 
+                    },
+                    {
+                        name: "Feedback", 
+                        href: "Feedback.html",
+                        pageId: "feedback-standalone" 
+                    },
+                    { 
+                        name: "Messages", 
+                        href: "Message.html",
+                        pageId: "message-standalone" 
+                    },
+                ]
+            },
+            { 
+                name: "Settings", 
+                icon: "fa-solid fa-gear", 
+                href: "Settings.html", 
+                pageId: "settings-standalone", 
+                sub: [] 
+            },
+        ];
+
+        // Function to generate the HTML content for the Sidebar
+        function getSidebarHtml(currentPage, userProfile) {
+            
+            // Helper function to render a single menu item
+            function renderMenuItem(item) {
+                const isActive = item.pageId === currentPage;
+                const isParent = item.sub && item.sub.length > 0;
+
+                let html = '';
+
+                if (isParent) {
+                    // Start Parent Container (Need a wrapper for the submenu to apply proper margin/padding)
+                    html += `<div class="submenu-container" data-pageid="${item.pageId}">`;
+                    
+                    // Main Link (acts as the toggle button)
+                    html += `
+                        <a href="${item.href}" class="menu-link submenu-link ${isActive ? 'active' : ''}" data-toggle="submenu">
+                            <span class="menu-icon"><i class="${item.icon}"></i></span>
+                            <span class="nav-label hidden">${item.name}</span>
+                            <i class="fas fa-chevron-down submenu-toggle-icon"></i>
+                        </a>
+                    `;
+                    
+                    // Submenu
+                    const submenuLinks = item.sub.map(subItem => `
+                        <a href="${subItem.href}" class="menu-link ${subItem.pageId === currentPage ? 'active' : ''}">
+                            <span class="menu-icon"><i class="fas fa-circle" style="font-size:0.5rem;"></i></span>
+                            <span class="nav-label hidden">${subItem.name}</span>
+                        </a>
+                    `).join('');
+
+                    // The 'open' class will be added by JS to expand max-height
+                    html += `<div class="submenu" data-submenu-for="${item.pageId}">
+                        ${submenuLinks}
+                    </div>`;
+
+                    html += `</div>`; // End Parent Container
+                } else {
+                    // Single Link
+                    html += `
+                        <a href="${item.href}" class="menu-link ${isActive ? 'active' : ''}" data-pageid="${item.pageId}">
+                            <span class="menu-icon"><i class="${item.icon}"></i></span>
+                            <span class="nav-label hidden">${item.name}</span>
+                        </a>
+                    `;
+                }
+
+                return html;
+            }
+
+            const navLinks = fullNavItems.map(item => renderMenuItem(item)).join('');
+
+            return `
+                <nav id="sidebar" class="sidebar">
+                    <!-- App Logo/Header -->
+                    <div class="sidebar-logo-container" style="padding: 1rem; display: flex; align-items: center; justify-content: center; height: var(--header-height);">
+                        <span class="nav-label hidden" style="font-size: 1.25rem; font-weight: 700; color: #4f46e5;">App Name</span>
+                        <i class="fas fa-gem" style="font-size: 1.5rem; color: #4f46e5;"></i>
+                    </div>
+
+                    <!-- Main Navigation Links -->
+                    <div class="menu-list" style="flex-grow: 1; margin-top: 0.25rem;">
+                        ${navLinks}
+                    </div>
+                    
+                    <!-- User Profile and Settings -->
+                    <div class="nav-user">
+                        <div class="nav-user-content" style="display: flex; align-items: center; width: 100%;">
+                            <img src="${userProfile.imgUrl}" alt="Profile" style="width: 2.5rem; height: 2.5rem; border-radius: 9999px; object-fit: cover;">
+                            <div class="nav-user-details hidden" style="margin-left: 0.75rem;">
+                                <p style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">${userProfile.name}</p>
+                                <p style="font-size: 0.75rem; color: #6b7280; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">${userProfile.designation}</p>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            `;
+        }
+
+        // Function to generate the HTML content for the Header
+        function getHeaderHtml(userProfile) {
+            return `
+                <header id="main-header" class="main-header">
+                    <!-- Mobile Menu Button -->
+                    <button id="menu-toggle" class="menu-toggle-btn" style="display: none; padding: 0.5rem; color: #4b5563; border: none; background: none; outline: none;">
+                        <i class="fas fa-bars" style="font-size: 1.25rem;"></i>
+                    </button>
+                    
+                    <!-- Search Bar -->
+                    <div class="header-search-container">
+                        <div style="position: relative;">
+                            <input type="search" placeholder="Search reports..." class="search-input">
+                            <i class="fas fa-search" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: #9ca3af;"></i>
+                        </div>
+                    </div>
+
+                    <!-- Header Right Menu -->
+                    <div class="header-btn-group">
+                        <div style="position: relative;">
+                            <button id="notifications-btn" class="header-btn">
+                                <i class="fas fa-bell" style="font-size: 1.25rem;"></i>
+                            </button>
+                            <!-- Notification Dropdown Menu (Hidden by default) -->
+                            <div id="notifications-menu" class="dropdown-menu notifications hidden">
+                                <div style="padding: 1rem; font-size: 0.875rem; color: #4b5563;">No new notifications.</div>
+                            </div>
+                        </div>
+
+                        <div style="position: relative;">
+                            <button id="profile-btn" class="header-btn" style="padding: 0.25rem; display: flex; align-items: center; column-gap: 0.5rem;">
+                                <img src="${userProfile.imgUrl}" alt="Profile" style="width: 2rem; height: 2rem; border-radius: 9999px; object-fit: cover;">
+                                <i class="fas fa-chevron-down" style="font-size: 0.625rem; color: #6b7280;"></i>
+                            </button>
+                            <!-- Profile Dropdown Menu (Hidden by default) -->
+                            <div id="profile-menu" class="dropdown-menu hidden">
+                                <a href="#">Profile</a>
+                                <a href="#">Settings</a>
+                                <div style="border-top: 1px solid #f3f4f6;"></div>
+                                <a href="#" class="sign-out">Sign Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            `;
+        }
+
+        function setupSubmenuToggles() {
+            document.querySelectorAll('.submenu-link[data-toggle="submenu"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const sidebar = document.getElementById('sidebar');
+                    // Prevent link navigation if the sidebar is expanded (or on mobile)
+                    if (sidebar.classList.contains('expanded') || window.innerWidth < 1024) {
+                        e.preventDefault(); 
+                        
+                        const parentContainer = this.closest('.submenu-container');
+                        const submenu = parentContainer.querySelector('.submenu');
+                        const toggleIcon = parentContainer.querySelector('.submenu-toggle-icon');
+
+                        const isExpanded = submenu.classList.contains('open');
+
+                        // Collapse all other submenus
+                        document.querySelectorAll('.submenu').forEach(s => {
+                            if (s !== submenu) {
+                                s.classList.remove('open');
+                                s.style.maxHeight = 0;
+                                s.closest('.submenu-container').querySelector('.submenu-toggle-icon').classList.remove('rotated');
+                            }
+                        });
+
+                        // Toggle current submenu
+                        if (isExpanded) {
+                            submenu.classList.remove('open');
+                            submenu.style.maxHeight = 0;
+                            toggleIcon.classList.remove('rotated');
+                        } else {
+                            submenu.classList.add('open');
+                            // Set height based on content for smooth transition
+                            // Use setTimeout to ensure max-height is calculated after content renders
+                            setTimeout(() => {
+                                const height = submenu.scrollHeight;
+                                submenu.style.maxHeight = height + 'px';
+                            }, 0);
+                            toggleIcon.classList.add('rotated');
+                        }
+                    }
+                });
+            });
+        }
+
+        function initializeLayout(currentPage = 'dashboard-standalone') {
+            // Inject Header and Sidebar HTML first
+            document.getElementById('header-placeholder').innerHTML = getHeaderHtml(userProfile);
+            document.getElementById('sidebar-placeholder').innerHTML = getSidebarHtml(currentPage, userProfile);
+            
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const mainHeader = document.getElementById('main-header');
+            const menuToggle = document.getElementById('menu-toggle');
+            const desktopBreakpoint = 1024; // Standard desktop breakpoint
+
+            // Helper to apply classes for the collapsed state
+            function collapseSidebar() {
+                if (!sidebar || !mainContent || !mainHeader) return;
+
+                // Remove the 'expanded' class on all primary layout elements
+                sidebar.classList.remove('expanded');
+                mainContent.classList.remove('expanded');
+                mainHeader.classList.remove('expanded');
+
+                // Hide all link labels and user details immediately
+                document.querySelectorAll('.nav-label').forEach(label => label.classList.add('hidden'));
+                document.querySelector('.nav-user-details').classList.add('hidden');
+                
+                // Also close any open submenus
+                document.querySelectorAll('.submenu').forEach(s => {
+                    s.classList.remove('open');
+                    s.style.maxHeight = 0;
+                    s.closest('.submenu-container')?.querySelector('.submenu-toggle-icon')?.classList.remove('rotated');
+                });
+            }
+
+            // Helper to apply classes for the expanded state
+            function expandSidebar() {
+                if (!sidebar || !mainContent || !mainHeader) return;
+
+                // Add the 'expanded' class on all primary layout elements
+                sidebar.classList.add('expanded');
+                mainContent.classList.add('expanded');
+                mainHeader.classList.add('expanded');
+                
+                // Show all link labels and user details after a short delay for the width transition to start
+                setTimeout(() => {
+                    document.querySelectorAll('.nav-label').forEach(label => label.classList.remove('hidden'));
+                    document.querySelector('.nav-user-details').classList.remove('hidden');
+                }, 50);
+            }
+            
+            // Mobile Toggle Handler
+            const handleMobileToggle = () => {
+                if (window.innerWidth < desktopBreakpoint) {
+                    const isExpanded = sidebar.classList.contains('expanded');
+                    if (isExpanded) {
+                        collapseSidebar();
+                    } else {
+                        expandSidebar();
+                    }
+                }
+            };
+            
+            // Setup Desktop Hover and Mobile Click Logic
+            const setupLayoutMode = () => {
+                // Remove existing listeners to prevent duplicates on resize
+                sidebar?.removeEventListener('mouseenter', expandSidebar);
+                sidebar?.removeEventListener('mouseleave', collapseSidebar);
+                menuToggle?.removeEventListener('click', handleMobileToggle);
+
+                if (window.innerWidth >= desktopBreakpoint) {
+                    // Desktop Mode: Hover to expand
+                    sidebar?.addEventListener('mouseenter', expandSidebar);
+                    sidebar?.addEventListener('mouseleave', collapseSidebar);
+                    
+                    // Initial state is collapsed on desktop
+                    collapseSidebar(); 
+                } else {
+                    // Mobile Mode: Click to toggle
+                    menuToggle?.addEventListener('click', handleMobileToggle);
+                    
+                    // Initial state is collapsed (hidden) on mobile
+                    collapseSidebar();
+                }
+            };
+
+            // Setup dropdown menus (Header)
+            function setupDropdown(buttonId, menuId) {
+                const button = document.getElementById(buttonId);
+                const menu = document.getElementById(menuId);
+                if (button && menu) {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        // Hide all other open dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(m => {
+                            if (m.id !== menuId) m.style.display = 'none';
+                        });
+                        menu.style.display = menu.style.display === 'block' ? 'none' : 'block'; // Toggle display
+                    });
+                    // Close on click outside
+                    document.addEventListener('click', (e) => {
+                        if (!button.contains(e.target) && !menu.contains(e.target)) {
+                            menu.style.display = 'none';
+                        }
+                    });
+                }
+            }
+            
+            // Run on load and setup resize listener
+            setupLayoutMode();
+            window.addEventListener('resize', setupLayoutMode);
+            
+            // Setup Submenu Toggles (must run after HTML injection)
+            setupSubmenuToggles();
+            
+            // Setup Header Dropdowns
+            setupDropdown('notifications-btn', 'notifications-menu');
+            setupDropdown('profile-btn', 'profile-menu');
+            
+            // Close sidebar on mobile when a link is clicked
+            document.querySelectorAll('.menu-list a').forEach(link => {
+                // Ensure link is a child link, not a parent toggle
+                if (!link.hasAttribute('data-toggle')) {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth < desktopBreakpoint) {
+                            setTimeout(collapseSidebar, 100);
+                        }
+                    });
+                }
+            });
+        }
+
+        // Initialize layout after the DOM is fully loaded
+        window.addEventListener('load', initializeLayout);
+    </script>
+</body>
+</html>

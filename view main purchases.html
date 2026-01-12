@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Purchases | Prescripty</title>
+    <link rel="stylesheet" href="src/css/viewPurchase.css">
+     <link rel="stylesheet" href="src/css/nav-layout.css">
+     <link rel="stylesheet" href="src/css/Notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <div class="main-layout-container">
+        
+        <div id="sidebar-placeholder"></div>
+
+        <main id="main-content">
+            <div class="content-card">
+            <div class="header-card">
+                <h1>Purchase Data <span style="color: tomato;">Main Stock</span></h1>
+            </div>
+
+            <div class="header-card filter-card">
+                    <label for="date-filter-start" class="filter-label">Filter Purchases by Date Range:</label>
+                    <div class="filter-controls date-range-controls">
+                        <input type="date" id="date-filter-start" class="date-input" aria-label="Start Date Filter">
+                        <input type="date" id="date-filter-end" class="date-input" aria-label="End Date Filter">
+                        
+                        <button id="clear-filter-btn" class="clear-btn" aria-label="Clear Date Filter">Clear Filter</button>
+                    </div>
+                </div>
+                        <div class="search-bar-container">
+                <div class="search-icon-wrapper">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" id="product-search" placeholder="Search product name or ID..." onkeyup="filterData()">
+            </div>
+
+            <div id="total-quantity-display" class="header-card total-quantity-card">
+                Total Purchased Quantity: <span id="total-quantity-value" class="text-green font-bold">0</span>
+            </div>
+
+            <div class="content-wrapper">
+                <div id="data-container">
+                    <div id="loading-indicator" class="loading-indicator">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading data, please wait...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    </div>
+
+    <script src="src/js/nav-layout.js"></script>
+    <script src="src/js/ViewMainPurchases.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/notification.js"></script> 
+    <script>
+        window.addEventListener('load', function() {
+            // 1. Initialize the layout first
+            initializeLayout('view-main-purchase-standalone'); 
+            });
+    </script>
+</body>
+</html>

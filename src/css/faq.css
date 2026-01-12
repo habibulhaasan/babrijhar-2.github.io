@@ -1,0 +1,97 @@
+/* FAQ Accordion Styles */
+
+.faq-item {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.faq-question {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f0f0f0;
+  position: relative;
+}
+
+.faq-answer {
+  padding: 10px;
+  display: none;
+}
+
+.faq-answer.show {
+  display: block;
+}
+
+.arrow .faq {
+  position: static;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
+
+.faq-question.active .arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* FAQ Image */
+
+.faq-item .faq-question img {
+  max-width: 50%;
+  height: auto;
+}
+
+/* Video Container */
+
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* FAQ Image */
+.faq-image {
+  max-width: 80%;
+  max-height: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 10%;
+  margin: auto;
+}
+
+/* Media query for FAQ Accordion on mobile devices */
+@media only screen and (max-width: 768px) {
+  .faq-item {
+    margin-bottom: 10px; /* Adjust margin bottom for FAQ items */
+  }
+
+  .faq-question {
+    padding: 15px; /* Increase padding for better touch interaction */
+  }
+
+  .faq-question img {
+    max-width: 100%; /* Make images responsive within FAQ questions */
+    height: auto;
+  }
+
+  .faq-image {
+    max-width: 100%; /* Make FAQ images responsive */
+    max-height: 200px; /* Limit max height for FAQ images */
+  }
+
+  .video-container {
+    padding-bottom: 30%; /* Adjust padding for better display on mobile */
+  }
+}
